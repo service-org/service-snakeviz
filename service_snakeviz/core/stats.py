@@ -4,26 +4,22 @@
 
 from __future__ import annotations
 
-
+import html
 import os.path
-from itertools import chain
 
-from tornado.escape import xhtml_escape
+from itertools import chain
 
 
 def table_rows(stats):
     """
     Generate a list of stats info lists for the snakeviz stats table.
-
     Each list will be a series of strings of:
-
     calls tot_time tot_time_per_call cum_time cum_time_per_call file_line_func
-
     """
     rows = []
 
     for k, v in stats.stats.items():
-        flf = xhtml_escape('{0}:{1}({2})'.format(
+        flf = html.escape('{0}:{1}({2})'.format(
             os.path.basename(k[0]), k[1], k[2]))
         name = '{0}:{1}({2})'.format(*k)
 
@@ -50,7 +46,6 @@ def json_stats(stats):
     """
     Convert the all_callees data structure to something compatible with
     JSON. Mostly this means all keys need to be strings.
-
     """
     keyfmt = '{0}:{1}({2})'.format
 
